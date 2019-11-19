@@ -25,7 +25,7 @@ public class Lab3 {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/xyz", "test", "test");
+                    .getConnection("jdbc:mysql://localhost:3306/sakila", "root", "Yash@12345");
 
             statement = connection.createStatement();
 
@@ -54,10 +54,10 @@ public class Lab3 {
             // iterate through the java resultset
             while (resultSet.next()) {
                 int id = resultSet.getInt("actor_id");
-                String name = resultSet.getString("first_name");
-                String address = resultSet.getString("last_name");
+                String firstname = resultSet.getString("first_name");
+                String lastname = resultSet.getString("last_name");
                 // print the results
-                System.out.format("%s, %s, %s\n", id, name, address);
+                System.out.format("%s, %s, %s\n", id, firstname, lastname);
             }
 
         } catch (SQLException e) {
@@ -156,3 +156,4 @@ public class Lab3 {
 
 
 }
+
