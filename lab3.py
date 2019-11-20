@@ -4,7 +4,7 @@ from tabulate import tabulate
 import datetime
 
 
-class Lab3:
+class Parent:
     def __init__(self):
         self._connection = pymysql.connect(
             "localhost", "root", "Yash@12345", "sakila", 3306)
@@ -20,9 +20,14 @@ class Lab3:
         actor = (first_name, last_name)
         cursor.execute(insert_query, actor)
         conn.commit()
-
         print(cursor.rowcount, "record is inserted")
         dbconn = self._connection.close()
+
+
+class Child(Parent):  # define child class
+    def __init__(self):
+        Parent.__init__(self)
+        print("Calling child constructor")
 
     def show_newactor(self, last_name):
         cursor = self._connection.cursor()
@@ -31,15 +36,15 @@ class Lab3:
         show_actor = "SELECT * FROM actor WHERE last_name = %s"
         cursor.execute(show_actor, actor)
         added_actor = cursor.fetchall()
+        # Now print fetched result in a tabular format using tabulate
         headers = ['actor_id', 'first_name', 'last_name', 'last_update']
         print(tabulate(added_actor, headers, tablefmt="psql"))
-    # Now print fetched result in a tabular format using tabulate
 
 
-lab = Lab3()
+c = Child()
 
 # Creates the actor
-lab.create_actor('jacob', 'green')
+# c.create_actor('jacob', 'green')
 
 # Uncomment to Retrive the actor
-# lab.show_newactor('green')
+c.show_newactor('green')
